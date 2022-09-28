@@ -31,13 +31,16 @@ public class Main {
         Tree shrub = new Tree(TreeType.SHRUB, FruitType.ORANGE, "shrub", new Image("img3.jpg"), 30);
         treeRegistry.register("shrub", shrub);
 
-//        for(int i = 0; i < canopy.getNoOfFruits(); i++) {
-//            try{
-//                apples.add((Fruit)apple.clone());
-//            } catch(CloneNotSupportedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        for(int i = 0; i < canopy.getNoOfFruits(); i++) {
+            try{
+//                apples.add(apple); this will simply add the same apple reference at all indexes (shallow copy)
+                apples.add((Fruit)apple.clone());
+            } catch(CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        canopy.setFruits(apples);
 
         String[] input = {"canopy", "tropical", "shrub"};
         int size = input.length;
@@ -58,9 +61,13 @@ public class Main {
         }
 
         shrub.getImage().setName("new shrub");
+        apple.setColor(Color.ORANGE);
 
         for(Tree tree: trees) {
             System.out.println(tree.getImage().getName());
+            if(tree.getName().equals("canopy")) {
+                System.out.println(tree.getFruits().get(0).getName() + tree.getFruits().get(0).getColor());
+            }
         }
     }
 }
